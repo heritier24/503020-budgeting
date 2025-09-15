@@ -47,6 +47,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // New users always go to onboarding
+        return redirect()->route('onboarding');
     }
 }

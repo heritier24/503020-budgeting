@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom CSS Variables for 60/30/10 Design System */
+:root {
+  /* Primary Colors (60% - Main backgrounds, large areas) */
+  --primary-bg: #f8fafc; /* slate-50 - Main background */
+  --primary-surface: #ffffff; /* white - Card backgrounds */
+  --primary-text: #1e293b; /* slate-800 - Main text */
+  --primary-border: #e2e8f0; /* slate-200 - Subtle borders */
+
+  /* Secondary Colors (30% - Interactive elements, navigation) */
+  --secondary-brand: #3b82f6; /* blue-500 - Primary brand */
+  --secondary-accent: #1d4ed8; /* blue-700 - Hover states */
+  --secondary-surface: #f1f5f9; /* slate-100 - Secondary surfaces */
+  --secondary-text: #475569; /* slate-600 - Secondary text */
+
+  /* Accent Colors (10% - Highlights, CTAs, status indicators) */
+  --accent-success: #10b981; /* emerald-500 - Under budget */
+  --accent-warning: #f59e0b; /* amber-500 - Approaching limit */
+  --accent-danger: #ef4444; /* red-500 - Over budget */
+  --accent-info: #06b6d4; /* cyan-500 - Information */
+  --accent-purple: #8b5cf6; /* violet-500 - Premium features */
+}
+
+/* Base component styles */
+.btn-primary {
+  @apply bg-secondary-brand text-white px-4 py-2 rounded-md hover:bg-secondary-accent transition-colors;
+}
+
+.card {
+  @apply bg-primary-surface border border-primary-border rounded-lg p-6 shadow-sm;
+}

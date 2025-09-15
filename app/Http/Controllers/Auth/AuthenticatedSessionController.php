@@ -34,6 +34,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = Auth::user();
+        
+        // Check if user has completed onboarding
+        $hasBudgetConfig = $user->budgetConfig()->exists();
+        $hasIncomeSources = $user->incomeSources()->exists();
+        
+        // Redirect to onboarding if user hasn't completed setup
+        if (!$hasBudgetConfig || !$hasIncomeSources) {
+            return redirect()->route('onboarding');
+        }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

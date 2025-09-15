@@ -42,4 +42,60 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the income sources for the user.
+     */
+    public function incomeSources()
+    {
+        return $this->hasMany(IncomeSource::class);
+    }
+
+    /**
+     * Get the income records for the user.
+     */
+    public function incomeRecords()
+    {
+        return $this->hasMany(IncomeRecord::class);
+    }
+
+    /**
+     * Get the budget configuration for the user.
+     */
+    public function budgetConfig()
+    {
+        return $this->hasOne(BudgetConfig::class);
+    }
+
+    /**
+     * Get the categories for the user.
+     */
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    /**
+     * Get the transactions for the user.
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Get the loans for the user.
+     */
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
+    }
+
+    /**
+     * Get the goals for the user.
+     */
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
+    }
 }

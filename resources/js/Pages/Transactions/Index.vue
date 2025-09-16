@@ -23,13 +23,24 @@
 
             <!-- Filters -->
             <div class="bg-gray-50 p-4 rounded-lg mb-6">
-              <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
                   <select v-model="filters.type" @change="applyFilters" class="w-full border border-gray-300 rounded-md px-3 py-2">
                     <option value="">All Types</option>
                     <option value="income">Income</option>
                     <option value="expense">Expense</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Category Type</label>
+                  <select v-model="filters.category_type" @change="applyFilters" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                    <option value="">All Types</option>
+                    <option value="needs">Needs</option>
+                    <option value="wants">Wants</option>
+                    <option value="savings">Savings</option>
+                    <option value="income">Income</option>
                   </select>
                 </div>
                 
@@ -65,6 +76,23 @@
               </div>
             </div>
 
+            <!-- Top 5 Category Overspent -->
+            <div v-if="topCategoryOverspent && topCategoryOverspent.length > 0" class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold text-blue-900 mb-4">Top 5 Category Overspent</h3>
+              <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div 
+                  v-for="category in topCategoryOverspent" 
+                  :key="category.name"
+                  class="text-center bg-white rounded-lg p-4 border border-blue-100"
+                >
+                  <div :class="`w-3 h-3 rounded-full mx-auto mb-2 ${getCategoryColor(category.type)}`"></div>
+                  <p class="text-sm font-medium text-gray-900 mb-1">{{ category.name }}</p>
+                  <p class="text-lg font-bold text-blue-600">{{ category.percentage.toFixed(1) }}%</p>
+                  <p class="text-xs text-gray-500">{{ category.count }} transactions</p>
+                </div>
+              </div>
+            </div>
+
             <!-- Transactions List -->
             <div class="space-y-4">
               <div 
@@ -73,11 +101,23 @@
                 class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors"
               >
                 <div class="flex items-center justify-between">
-                  <div class="flex items-center space-x-4">
+                  <div class="flex items-center space-x-4 flex-1">
                     <div :class="`w-3 h-3 rounded-full ${transaction.type === 'income' ? 'bg-green-500' : 'bg-red-500'}`"></div>
-                    <div>
+                    <div class="flex-1">
                       <h3 class="font-medium text-gray-900">{{ transaction.description }}</h3>
                       <p class="text-sm text-gray-500">{{ transaction.category?.name }} • {{ new Date(transaction.transaction_date).toLocaleDateString() }}</p>
+                    </div>
+                  </div>
+                  
+                  <!-- Progress Bar Column -->
+                  <div class="w-32 mx-4">
+                    <div class="text-xs text-gray-500 mb-1">{{ getCategoryPercentage(transaction.category?.id) }}%</div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        class="h-2 rounded-full transition-all duration-300" 
+                        :class="getCategoryColor(transaction.category?.type)"
+                        :style="`width: ${getCategoryPercentage(transaction.category?.id)}%`"
+                      ></div>
                     </div>
                   </div>
                   
@@ -152,6 +192,8 @@ const props = defineProps({
   user: Object,
   transactions: Object,
   categories: Array,
+  groupedCategories: Object,
+  topCategoryOverspent: Array,
   filters: Object
 })
 
@@ -160,21 +202,27 @@ const filters = ref(props.filters || {})
 
 // Computed properties
 const filteredCategories = computed(() => {
-  if (!filters.value.type) {
+  if (!filters.value.type && !filters.value.category_type) {
     return props.categories || []
   }
   
-  // Filter categories based on selected transaction type
-  return (props.categories || []).filter(category => {
+  let categories = props.categories || []
+  
+  // Filter by transaction type
+  if (filters.value.type) {
     if (filters.value.type === 'income') {
-      // For income transactions, show only income categories
-      return category.type === 'income'
+      categories = categories.filter(cat => cat.type === 'income')
     } else if (filters.value.type === 'expense') {
-      // For expense transactions, show needs/wants/savings categories (50/30/20)
-      return ['needs', 'wants', 'savings'].includes(category.type)
+      categories = categories.filter(cat => ['needs', 'wants', 'savings'].includes(cat.type))
     }
-    return true
-  })
+  }
+  
+  // Filter by category type
+  if (filters.value.category_type) {
+    categories = categories.filter(cat => cat.type === filters.value.category_type)
+  }
+  
+  return categories
 })
 
 // Watchers
@@ -213,5 +261,40 @@ const deleteTransaction = (transaction) => {
 
 const goToPage = (url) => {
   router.visit(url)
+}
+
+// Calculate category percentage for progress bars
+const getCategoryPercentage = (categoryId) => {
+  if (!categoryId || !props.topCategoryOverspent) return 0
+  
+  const category = props.topCategoryOverspent.find(cat => {
+    // Find category by matching with transactions
+    const categoryTransactions = props.transactions.data.filter(t => t.category?.id === categoryId)
+    return categoryTransactions.length > 0
+  })
+  
+  if (!category) return 0
+  
+  // Calculate percentage based on total transactions in this category
+  const totalTransactionsInCategory = props.transactions.data.filter(t => t.category?.id === categoryId).length
+  const totalTransactions = props.transactions.data.length
+  
+  return totalTransactions > 0 ? (totalTransactionsInCategory / totalTransactions) * 100 : 0
+}
+
+// Get category color based on type
+const getCategoryColor = (categoryType) => {
+  switch (categoryType) {
+    case 'needs':
+      return 'bg-red-500'
+    case 'wants':
+      return 'bg-yellow-500'
+    case 'savings':
+      return 'bg-green-500'
+    case 'income':
+      return 'bg-blue-500'
+    default:
+      return 'bg-gray-500'
+  }
 }
 </script>

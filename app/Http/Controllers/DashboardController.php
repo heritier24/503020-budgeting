@@ -96,6 +96,9 @@ class DashboardController extends Controller
                 $query->where('type', 'savings');
             })
             ->sum('amount');
+            
+        // Add goal contributions to savings spent (since they're deducted from savings budget)
+        $savingsSpentWithGoals = $savingsSpent + $totalGoalContributions;
         
         // Prepare dashboard data
         $dashboardData = [
@@ -145,9 +148,11 @@ class DashboardController extends Controller
                     'percentage' => $budgetConfig->savings_percentage,
                     'amount' => $savingsAmount,
                     'spent' => $savingsSpent,
+                    'spent_with_goals' => $savingsSpentWithGoals,
+                    'goal_contributions' => $totalGoalContributions,
                 ],
             ],
-            'recent_transactions' => $transactions->take(5),
+            'recent_transactions' => $transactions->sortByDesc('transaction_date')->take(5),
             'categories' => Category::where('user_id', $user->id)
                 ->orWhereNull('user_id')
                 ->get(),

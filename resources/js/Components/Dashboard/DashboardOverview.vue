@@ -100,7 +100,7 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Summary Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         <div class="bg-blue-50 p-6 rounded-lg">
           <h4 class="text-sm font-medium text-blue-600 mb-2">Monthly Income</h4>
           <p class="text-2xl font-bold text-blue-900">RWF {{ data.monthly_income?.toLocaleString() || '0' }}</p>
@@ -116,6 +116,12 @@
           <h4 class="text-sm font-medium text-purple-600 mb-2">Available After Loans</h4>
           <p class="text-2xl font-bold text-purple-900">RWF {{ data.available_income?.toLocaleString() || '0' }}</p>
           <p class="text-xs text-purple-600 mt-1">For 50/30/20 budget</p>
+        </div>
+        
+        <div class="bg-red-50 p-6 rounded-lg">
+          <h4 class="text-sm font-medium text-red-600 mb-2">Total Spent</h4>
+          <p class="text-2xl font-bold text-red-900">RWF {{ data.current_expenses?.toLocaleString() || '0' }}</p>
+          <p class="text-xs text-red-600 mt-1">This month</p>
         </div>
         
         <div class="bg-green-50 p-6 rounded-lg">
@@ -184,7 +190,7 @@
       <!-- Budget Status Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <!-- Needs -->
-        <div class="card">
+        <div class="card cursor-pointer hover:shadow-lg transition-shadow" @click="viewCategoryTransactions('needs')">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-semibold text-primary-text">Needs ({{ data.budget_allocation.needs.percentage }}%)</h3>
             <div class="w-8 h-8 bg-accent-danger rounded-full flex items-center justify-center">
@@ -214,7 +220,7 @@
         </div>
 
         <!-- Wants -->
-        <div class="card">
+        <div class="card cursor-pointer hover:shadow-lg transition-shadow" @click="viewCategoryTransactions('wants')">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-semibold text-primary-text">Wants ({{ data.budget_allocation.wants.percentage }}%)</h3>
             <div class="w-8 h-8 bg-accent-warning rounded-full flex items-center justify-center">
@@ -244,7 +250,7 @@
         </div>
 
         <!-- Savings -->
-        <div class="card">
+        <div class="card cursor-pointer hover:shadow-lg transition-shadow" @click="viewCategoryTransactions('savings')">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-semibold text-primary-text">Savings ({{ data.budget_allocation.savings.percentage }}%)</h3>
             <div class="w-8 h-8 bg-accent-success rounded-full flex items-center justify-center">
@@ -258,11 +264,11 @@
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-secondary-text">Spent:</span>
-              <span class="text-primary-text font-medium">RWF {{ data.budget_allocation.savings.spent?.toLocaleString() || '0' }}</span>
+              <span class="text-primary-text font-medium">RWF {{ data.budget_allocation.savings.spent_with_goals?.toLocaleString() || '0' }}</span>
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-secondary-text">Remaining:</span>
-              <span class="text-accent-success font-medium">RWF {{ ((data.budget_allocation.savings.amount || 0) - (data.budget_allocation.savings.spent || 0)).toLocaleString() }}</span>
+              <span class="text-accent-success font-medium">RWF {{ ((data.budget_allocation.savings.amount || 0) - (data.budget_allocation.savings.spent_with_goals || 0)).toLocaleString() }}</span>
             </div>
           </div>
           <div class="mt-4">
@@ -286,16 +292,6 @@
             </p>
           </div>
           
-          <!-- Goal Contributions Impact -->
-          <div v-if="data.goals_info?.total_contributions > 0" class="mt-4 pt-4 border-t border-gray-200">
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-xs text-secondary-text">Goal Contributions</span>
-              <span class="text-xs font-medium text-orange-600">-RWF {{ data.goals_info.total_contributions.toLocaleString() }}</span>
-            </div>
-            <p class="text-xs text-orange-600 mt-1">
-              Deducted from savings budget
-            </p>
-          </div>
         </div>
       </div>
 
@@ -340,7 +336,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Link } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
 
 // Props
 const props = defineProps<{
@@ -416,6 +412,10 @@ const getStatusColor = (status: string) => {
     default:
       return 'accent-success'
   }
+}
+
+const viewCategoryTransactions = (categoryType: string) => {
+  router.visit(`/transactions?type=expense&category_type=${categoryType}`)
 }
 
 // Quick transaction buttons now use Link components for better navigation

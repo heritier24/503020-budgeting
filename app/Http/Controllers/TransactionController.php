@@ -30,6 +30,13 @@ class TransactionController extends Controller
             $query->where('category_id', $request->category_id);
         }
         
+        // Filter by category type (needs, wants, savings)
+        if ($request->has('category_type') && $request->category_type) {
+            $query->whereHas('category', function($q) use ($request) {
+                $q->where('type', $request->category_type);
+            });
+        }
+        
         // Filter by date range
         if ($request->has('date_from') && $request->date_from) {
             $query->where('transaction_date', '>=', $request->date_from);
@@ -47,10 +54,18 @@ class TransactionController extends Controller
             ->orWhereNull('user_id')
             ->get();
         
+        // Group categories by type for better filtering
+        $groupedCategories = $categories->groupBy('type');
+        
+        // Calculate top 5 category overspent for current filters
+        $topCategoryOverspent = $this->calculateTopCategoryOverspent($user, $request);
+        
         return Inertia::render('Transactions/Index', [
             'transactions' => $transactions,
             'categories' => $categories,
-            'filters' => $request->only(['type', 'category_id', 'date_from', 'date_to'])
+            'groupedCategories' => $groupedCategories,
+            'topCategoryOverspent' => $topCategoryOverspent,
+            'filters' => $request->only(['type', 'category_id', 'category_type', 'date_from', 'date_to'])
         ]);
     }
 
@@ -244,5 +259,68 @@ class TransactionController extends Controller
             ],
             'category_breakdown' => $categoryBreakdown
         ]);
+    }
+
+    /**
+     * Calculate top 5 category overspent based on current filters
+     */
+    private function calculateTopCategoryOverspent($user, $request)
+    {
+        $query = $user->transactions();
+        
+        // Apply same filters as main query
+        if ($request->has('type') && $request->type) {
+            $query->where('type', $request->type);
+        }
+        
+        if ($request->has('category_id') && $request->category_id) {
+            $query->where('category_id', $request->category_id);
+        }
+        
+        if ($request->has('category_type') && $request->category_type) {
+            $query->whereHas('category', function($q) use ($request) {
+                $q->where('type', $request->category_type);
+            });
+        }
+        
+        if ($request->has('date_from') && $request->date_from) {
+            $query->where('transaction_date', '>=', $request->date_from);
+        }
+        
+        if ($request->has('date_to') && $request->date_to) {
+            $query->where('transaction_date', '<=', $request->date_to);
+        }
+        
+        $transactions = $query->with('category')->get();
+        
+        // Group by category and calculate totals
+        $categoryTotals = $transactions->where('type', 'expense')
+            ->groupBy('category_id')
+            ->map(function($categoryTransactions) {
+                $category = $categoryTransactions->first()->category;
+                $totalAmount = $categoryTransactions->sum('amount');
+                $transactionCount = $categoryTransactions->count();
+                
+                return [
+                    'name' => $category ? $category->name : 'Uncategorized',
+                    'type' => $category ? $category->type : 'other',
+                    'amount' => $totalAmount,
+                    'count' => $transactionCount,
+                ];
+            })
+            ->sortByDesc('amount')
+            ->take(5)
+            ->values();
+        
+        // Calculate total expenses for percentage calculation
+        $totalExpenses = $transactions->where('type', 'expense')->sum('amount');
+        
+        // Add percentage to each category
+        $categoryTotals = $categoryTotals->map(function($category) use ($totalExpenses) {
+            $category['percentage'] = $totalExpenses > 0 ? ($category['amount'] / $totalExpenses) * 100 : 0;
+            return $category;
+        });
+        
+        return $categoryTotals;
     }
 }

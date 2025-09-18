@@ -14,7 +14,7 @@
               </div>
               <Link 
                 href="/loans/create"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+                  class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition-colors"
               >
                 Add New Loan
               </Link>
@@ -159,7 +159,7 @@
               <div class="mt-6">
                 <Link 
                   href="/loans/create"
-                  class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                  class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700"
                 >
                   Add New Loan
                 </Link>

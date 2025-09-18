@@ -11,7 +11,7 @@
           <div class="flex items-center space-x-4">
                     <Link
                       href="/transactions/create"
-                      class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                      class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors"
                     >
               <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -286,12 +286,12 @@
             </div>
             <div class="w-full bg-gray-200 rounded-full h-1.5">
               <div class="bg-blue-500 h-1.5 rounded-full transition-all duration-300" :style="`width: ${data.goals_info.savings_goals.progress_percentage}%`"></div>
-            </div>
+        </div>
             <p class="text-xs text-secondary-text mt-1">
               RWF {{ data.goals_info.savings_goals.current_amount.toLocaleString() }} / {{ data.goals_info.savings_goals.target_amount.toLocaleString() }}
             </p>
-          </div>
-          
+      </div>
+
         </div>
       </div>
 

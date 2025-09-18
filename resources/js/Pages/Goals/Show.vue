@@ -38,7 +38,7 @@
                 </Link>
                 <button 
                   @click="updateProgress"
-                  class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                    class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors"
                 >
                   Update Progress
                 </button>
@@ -226,7 +226,7 @@
               <button
                 type="submit"
                 :disabled="progressForm.processing"
-                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                    class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 disabled:opacity-50"
               >
                 {{ progressForm.processing ? 'Updating...' : 'Update' }}
               </button>

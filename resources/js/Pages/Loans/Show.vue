@@ -29,7 +29,7 @@
                 </Link>
                 <Link 
                   :href="`/loans/${data.loan.id}/edit`"
-                  class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+                  class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition-colors"
                 >
                   Edit Loan
                 </Link>

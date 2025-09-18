@@ -14,7 +14,7 @@
                 </div>
                 <Link 
                   href="/transactions/create"
-                  class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors"
                 >
                   Add Transaction
                 </Link>
@@ -166,7 +166,7 @@
                   :class="[
                     'px-3 py-2 text-sm border rounded-md',
                     link.active 
-                      ? 'bg-blue-600 text-white border-blue-600' 
+                      ? 'bg-gray-800 text-white border-gray-800' 
                       : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50',
                     !link.url ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
                   ]"

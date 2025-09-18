@@ -11,8 +11,8 @@
   --primary-border: #e2e8f0; /* slate-200 - Subtle borders */
 
   /* Secondary Colors (30% - Interactive elements, navigation) */
-  --secondary-brand: #3b82f6; /* blue-500 - Primary brand */
-  --secondary-accent: #1d4ed8; /* blue-700 - Hover states */
+  --secondary-brand: #059669; /* emerald-600 - Primary brand (money/savings) */
+  --secondary-accent: #047857; /* emerald-700 - Hover states */
   --secondary-surface: #f1f5f9; /* slate-100 - Secondary surfaces */
   --secondary-text: #475569; /* slate-600 - Secondary text */
 
@@ -26,7 +26,7 @@
 
 /* Base component styles */
 .btn-primary {
-  @apply bg-secondary-brand text-white px-4 py-2 rounded-md hover:bg-secondary-accent transition-colors;
+  @apply bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors;
 }
 
 .card {

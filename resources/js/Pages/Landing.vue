@@ -85,22 +85,22 @@
           <h2 class="text-3xl font-bold text-primary-text mb-8">How It Works</h2>
           <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="text-center">
-              <div class="w-12 h-12 bg-secondary-brand text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+              <div class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
               <h3 class="font-semibold text-primary-text mb-2">Sign Up</h3>
               <p class="text-sm text-secondary-text">Create your free account in seconds</p>
             </div>
             <div class="text-center">
-              <div class="w-12 h-12 bg-secondary-brand text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+              <div class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
               <h3 class="font-semibold text-primary-text mb-2">Set Budget</h3>
               <p class="text-sm text-secondary-text">Configure your 50/30/20 allocation</p>
             </div>
             <div class="text-center">
-              <div class="w-12 h-12 bg-secondary-brand text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+              <div class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
               <h3 class="font-semibold text-primary-text mb-2">Track Expenses</h3>
               <p class="text-sm text-secondary-text">Record your income and expenses</p>
             </div>
             <div class="text-center">
-              <div class="w-12 h-12 bg-secondary-brand text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
+              <div class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">4</div>
               <h3 class="font-semibold text-primary-text mb-2">Achieve Goals</h3>
               <p class="text-sm text-secondary-text">Watch your financial health improve</p>
             </div>
@@ -108,13 +108,13 @@
         </div>
 
         <!-- Final CTA -->
-        <div class="bg-secondary-brand rounded-2xl p-8 text-white">
+        <div class="bg-gray-800 rounded-2xl p-8 text-white">
           <div class="flex items-center justify-center mb-4">
             <img src="/tamba-logo.ico" alt="Tamba Group" class="h-8 w-8 mr-3 filter brightness-0 invert" />
             <h2 class="text-3xl font-bold">Ready to Transform Your Finances?</h2>
           </div>
           <p class="text-xl mb-6 opacity-90">Join thousands of users who have taken control of their budget with Tamba Group's trusted solution</p>
-          <Link :href="route('register')" class="bg-white text-secondary-brand hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-colors">
+          <Link :href="route('register')" class="bg-white text-gray-800 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-colors">
             Get Started Free
           </Link>
         </div>

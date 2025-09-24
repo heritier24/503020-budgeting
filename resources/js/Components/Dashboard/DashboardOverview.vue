@@ -335,7 +335,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 
 // Props
@@ -345,13 +345,43 @@ const props = defineProps<{
     budget_config: any
     income_sources: any[]
     monthly_income: number
+    available_income: number
     current_expenses: number
     current_income: number
     remaining_budget: number
+    loan_info: {
+      total_monthly_payments: number
+      total_debt: number
+      active_loans_count: number
+    }
+    goals_info: {
+      active_goals_count: number
+      total_contributions: number
+      savings_goals: {
+        count: number
+        target_amount: number
+        current_amount: number
+        progress_percentage: number
+      }
+      debt_payoff_goals: {
+        count: number
+        target_amount: number
+        current_amount: number
+        progress_percentage: number
+      }
+      expense_reduction_goals_count: number
+      income_goals_count: number
+    }
     budget_allocation: {
       needs: { percentage: number; amount: number; spent: number }
       wants: { percentage: number; amount: number; spent: number }
-      savings: { percentage: number; amount: number; spent: number }
+      savings: { 
+        percentage: number
+        amount: number
+        spent: number
+        spent_with_goals: number
+        goal_contributions: number
+      }
     }
     recent_transactions: any[]
     categories: any[]

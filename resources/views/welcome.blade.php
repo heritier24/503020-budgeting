@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Tamba BudgetTracker</title>
+        <title>Rule 50 30 20</title>
         
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">

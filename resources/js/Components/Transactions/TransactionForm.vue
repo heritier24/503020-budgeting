@@ -105,7 +105,7 @@
                   <button 
                     v-for="amount in quickAmounts" 
                     :key="amount"
-                    @click="form.amount = amount"
+                    @click="form.amount = amount.toString()"
                     class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded border"
                   >
                     {{ amount.toLocaleString() }}
@@ -212,7 +212,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 // Props

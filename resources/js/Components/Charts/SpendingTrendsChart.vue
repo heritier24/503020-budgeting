@@ -64,9 +64,11 @@ import { ref, computed } from 'vue'
 // Props
 const props = defineProps<{
   data?: Array<{
-    date: string
-    amount: number
-    category: string
+    date?: string
+    month?: string
+    amount?: number
+    expenses?: number
+    category?: string
   }>
 }>()
 

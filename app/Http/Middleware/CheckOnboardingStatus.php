@@ -18,6 +18,15 @@ class CheckOnboardingStatus
         $user = $request->user();
         
         if ($user) {
+            // Skip onboarding check for admin users
+            if ($user->is_admin) {
+                // If admin is trying to access onboarding, redirect to admin dashboard
+                if ($request->routeIs('onboarding')) {
+                    return redirect()->route('admin.dashboard');
+                }
+                return $next($request);
+            }
+            
             // Check if user has completed onboarding
             $hasBudgetConfig = $user->budgetConfig()->exists();
             $hasIncomeSources = $user->incomeSources()->exists();

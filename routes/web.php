@@ -99,8 +99,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
+    Route::get('/users/{userId}', [AdminController::class, 'userDetails'])->name('user.details');
     Route::get('/analytics', [AdminController::class, 'analytics'])->name('analytics');
     Route::get('/system-health', [AdminController::class, 'systemHealth'])->name('system-health');
+    Route::get('/real-time-transactions', [AdminController::class, 'realTimeTransactions'])->name('real-time-transactions');
 });
 
 require __DIR__.'/auth.php';

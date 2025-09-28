@@ -47,6 +47,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink href="/analytics">
                                     Analytics
                                 </NavLink>
+                                <NavLink v-if="$page.props.auth.user.is_admin" href="/admin/dashboard" class="text-red-600 hover:text-red-800">
+                                    Admin
+                                </NavLink>
                             </div>
                         </div>
 
@@ -144,6 +147,9 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href="/analytics">
                             Analytics
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if="$page.props.auth.user.is_admin" href="/admin/dashboard" class="text-red-600 hover:text-red-800">
+                            Admin Dashboard
                         </ResponsiveNavLink>
                     </div>
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 import AdminLayout from '@/Layouts/AdminLayout.vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 // Props
 defineProps<{
@@ -55,6 +56,37 @@ defineProps<{
     }>
   }
 }>()
+
+// Real-time data
+const realTimeTransactions = ref<any[]>([])
+const activeUsers = ref(0)
+const lastUpdate = ref('')
+let intervalId: number | null = null
+
+// Fetch real-time data
+const fetchRealTimeData = async () => {
+  try {
+    const response = await fetch('/admin/real-time-transactions')
+    const data = await response.json()
+    realTimeTransactions.value = data.recent_transactions
+    activeUsers.value = data.active_users
+    lastUpdate.value = new Date(data.timestamp).toLocaleTimeString()
+  } catch (error) {
+    console.error('Error fetching real-time data:', error)
+  }
+}
+
+// Set up real-time updates
+onMounted(() => {
+  fetchRealTimeData()
+  intervalId = setInterval(fetchRealTimeData, 30000) // Update every 30 seconds
+})
+
+onUnmounted(() => {
+  if (intervalId) {
+    clearInterval(intervalId)
+  }
+})
 </script>
 
 <template>
@@ -220,6 +252,61 @@ defineProps<{
           </div>
         </div>
 
+        <!-- Real-time Activity -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <!-- Active Users -->
+          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">Active Users</h3>
+                  <p class="text-2xl font-bold text-green-600">{{ activeUsers }}</p>
+                </div>
+                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              </div>
+              <p class="text-xs text-gray-500 mt-2">Users active in last 15 minutes</p>
+            </div>
+          </div>
+
+          <!-- Last Update -->
+          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">Last Update</h3>
+                  <p class="text-sm font-medium text-gray-600">{{ lastUpdate || 'Loading...' }}</p>
+                </div>
+                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+              </div>
+              <p class="text-xs text-gray-500 mt-2">Real-time data updates every 30s</p>
+            </div>
+          </div>
+
+          <!-- Real-time Status -->
+          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">System Status</h3>
+                  <p class="text-sm font-medium text-green-600">✓ Live</p>
+                </div>
+                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center animate-pulse">
+                  <div class="w-3 h-3 bg-white rounded-full"></div>
+                </div>
+              </div>
+              <p class="text-xs text-gray-500 mt-2">Real-time monitoring active</p>
+            </div>
+          </div>
+        </div>
+
         <!-- Recent Activity -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <!-- Recent Users -->
@@ -238,20 +325,29 @@ defineProps<{
             </div>
           </div>
 
-          <!-- Recent Transactions -->
+          <!-- Real-time Transactions -->
           <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6">
-              <h3 class="text-lg font-medium text-gray-900 mb-4">Recent Transactions</h3>
-              <div class="space-y-3">
-                <div v-for="transaction in data.recent_transactions" :key="transaction.id" class="flex items-center justify-between">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-medium text-gray-900">Live Transactions</h3>
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <div class="w-2 h-2 bg-green-400 rounded-full mr-1 animate-pulse"></div>
+                  Live
+                </span>
+              </div>
+              <div class="space-y-3 max-h-64 overflow-y-auto">
+                <div v-for="transaction in realTimeTransactions.slice(0, 10)" :key="transaction.id" class="flex items-center justify-between p-2 bg-gray-50 rounded">
                   <div>
                     <p class="text-sm font-medium text-gray-900">{{ transaction.description }}</p>
                     <p class="text-sm text-gray-500">{{ transaction.user.name }} • {{ transaction.category.name }}</p>
                   </div>
                   <div class="text-right">
                     <p class="text-sm font-medium text-gray-900">${{ transaction.amount.toLocaleString() }}</p>
-                    <span class="text-xs text-gray-400">{{ new Date(transaction.created_at).toLocaleDateString() }}</span>
+                    <span class="text-xs text-gray-400">{{ new Date(transaction.created_at).toLocaleTimeString() }}</span>
                   </div>
+                </div>
+                <div v-if="realTimeTransactions.length === 0" class="text-center py-4 text-gray-500">
+                  Loading real-time data...
                 </div>
               </div>
             </div>

@@ -154,9 +154,9 @@ const submitSearch = () => {
                     {{ new Date(user.updated_at).toLocaleDateString() }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button class="text-indigo-600 hover:text-indigo-900 mr-3">
-                      View
-                    </button>
+                    <Link :href="route('admin.user.details', user.id)" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                      View Details
+                    </Link>
                     <button class="text-yellow-600 hover:text-yellow-900 mr-3">
                       Edit
                     </button>

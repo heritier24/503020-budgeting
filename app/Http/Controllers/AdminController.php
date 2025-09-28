@@ -98,6 +98,9 @@ class AdminController extends Controller
         }
 
         $users = $query->withCount(['transactions', 'goals', 'loans'])
+            ->with(['transactions' => function ($query) {
+                $query->latest()->limit(5);
+            }])
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
@@ -105,6 +108,56 @@ class AdminController extends Controller
             'users' => $users,
             'filters' => $request->only(['search', 'admin_only'])
         ]);
+    }
+
+    /**
+     * Show individual user details with all transactions
+     */
+    public function userDetails($userId)
+    {
+        $user = User::with([
+            'transactions' => function ($query) {
+                $query->with('category')->latest();
+            },
+            'goals',
+            'loans',
+            'budgetConfig',
+            'incomeSources'
+        ])->findOrFail($userId);
+
+        $data = [
+            'user' => $user,
+            'transaction_stats' => [
+                'total_transactions' => $user->transactions->count(),
+                'total_amount' => $user->transactions->sum('amount'),
+                'this_month' => $user->transactions()->whereMonth('created_at', now()->month)->count(),
+                'this_month_amount' => $user->transactions()->whereMonth('created_at', now()->month)->sum('amount'),
+            ],
+            'recent_activity' => $user->transactions()->with('category')->latest()->limit(20)->get(),
+        ];
+
+        return inertia('Admin/UserDetails', $data);
+    }
+
+    /**
+     * Get real-time transaction data
+     */
+    public function realTimeTransactions()
+    {
+        $recentTransactions = Transaction::with(['user', 'category'])
+            ->latest()
+            ->limit(50)
+            ->get();
+
+        $activeUsers = User::where('updated_at', '>=', now()->subMinutes(15))->count();
+        
+        $data = [
+            'recent_transactions' => $recentTransactions,
+            'active_users' => $activeUsers,
+            'timestamp' => now()->toISOString(),
+        ];
+
+        return response()->json($data);
     }
 
     /**

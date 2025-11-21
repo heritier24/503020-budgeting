@@ -4,7 +4,7 @@
       <!-- Header -->
       <div class="bg-gradient-to-r from-secondary-brand to-secondary-accent text-white p-6 rounded-t-lg">
         <div class="flex justify-between items-center">
-          <h2 class="text-2xl font-bold">Welcome to 50 30 20 Budget Tracker</h2>
+          <h2 class="text-2xl font-bold">Welcome to Tamba Group Budget Tracker</h2>
           <button @click="$emit('close')" class="text-white hover:text-gray-200">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

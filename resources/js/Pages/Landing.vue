@@ -1,16 +1,18 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-primary-bg to-secondary-surface">
+    <SeoHead
+      title="Tamba Group - Budget Tracker | Master the 50/30/20 Rule"
+      description="Take control of your finances with Tamba Group's intuitive budget tracker. Master the 50/30/20 budgeting rule, track expenses, manage income, and achieve your financial goals. Free budget planning tool with smart analytics."
+      keywords="budget tracker, 50 30 20 rule, personal finance, expense tracking, financial planning, budgeting app, money management, savings goals, income tracking, financial analytics, Tamba Group, budget calculator, expense manager, financial goals, smart budgeting"
+      url="/"
+    />
     <!-- Header -->
     <header class="bg-white/80 backdrop-blur-sm border-b border-primary-border">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-6">
           <div class="flex items-center">
-            <div class="flex items-center space-x-1 mr-3">
-              <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">50</div>
-              <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">30</div>
-              <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold">20</div>
-            </div>
-            <h1 class="text-2xl font-bold text-primary-text">Rule 50 30 20</h1>
+            <img src="/tambagroup.png" alt="Tamba Group" class="h-10 w-auto mr-3" />
+            <h1 class="text-2xl font-bold text-primary-text">Tamba Group</h1>
           </div>
           <div class="flex items-center space-x-4">
             <Link :href="route('login')" class="text-secondary-text hover:text-secondary-brand font-medium transition-colors">
@@ -29,10 +31,8 @@
       <div class="text-center">
         <!-- Logo Section -->
         <div class="mb-8">
-          <div class="flex items-center justify-center space-x-2 mb-4">
-            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-lg font-bold">50</div>
-            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-lg font-bold">30</div>
-            <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-lg font-bold">20</div>
+          <div class="flex items-center justify-center mb-4">
+            <img src="/tambagroup.png" alt="Tamba Group" class="h-24 w-auto" />
           </div>
           <p class="text-lg text-secondary-text">Master the 50/30/20 Budgeting Rule</p>
         </div>
@@ -118,11 +118,7 @@
         <!-- Final CTA -->
         <div class="bg-gray-800 rounded-2xl p-8 text-white">
           <div class="flex items-center justify-center mb-4">
-                <div class="flex items-center space-x-1 mr-3">
-                  <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">50</div>
-                  <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">30</div>
-                  <div class="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold">20</div>
-                </div>
+            <img src="/tambagroup.png" alt="Tamba Group" class="h-12 w-auto mr-3" />
             <h2 class="text-3xl font-bold">Ready to Transform Your Finances?</h2>
           </div>
           <p class="text-xl mb-6 opacity-90">Join thousands of users who have mastered the 50/30/20 budgeting rule with our trusted solution</p>
@@ -137,12 +133,8 @@
     <footer class="bg-white border-t border-primary-border py-8">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="flex items-center justify-center mb-4">
-            <div class="flex items-center space-x-1 mr-2">
-              <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">50</div>
-              <div class="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">30</div>
-              <div class="w-4 h-4 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold">20</div>
-            </div>
-            <span class="text-secondary-text">© 2024 Rule 50 30 20. All rights reserved.</span>
+            <img src="/tambagroup.png" alt="Tamba Group" class="h-6 w-auto mr-2" />
+            <span class="text-secondary-text">© 2024 Tamba Group. All rights reserved.</span>
         </div>
         <p class="text-sm text-secondary-text">Master the 50/30/20 Budgeting Rule</p>
       </div>
@@ -152,7 +144,7 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3'
-import { Head } from '@inertiajs/vue3'
+import SeoHead from '@/Components/SeoHead.vue'
 
 defineProps({
     canLogin: Boolean,

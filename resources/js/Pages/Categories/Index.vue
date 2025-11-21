@@ -1,6 +1,10 @@
 <template>
   <AuthenticatedLayout :user="data.user">
-    <Head title="Categories" />
+    <SeoHead
+      title="Categories"
+      description="Organize your expenses with custom categories. Create and manage budget categories for needs, wants, and savings. Categorize transactions for better financial tracking."
+      keywords="expense categories, budget categories, transaction categories, financial categories, spending categories, category management"
+    />
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -207,7 +211,8 @@
 </template>
 
 <script setup>
-import { Head, Link, router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
+import SeoHead from '@/Components/SeoHead.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 
 // Props

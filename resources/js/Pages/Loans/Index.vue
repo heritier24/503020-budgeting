@@ -1,6 +1,10 @@
 <template>
   <AuthenticatedLayout :user="data.user">
-    <Head title="Loans" />
+    <SeoHead
+      title="Loans"
+      description="Manage your loans and track loan payments. Monitor loan balances, payment schedules, and track your progress towards becoming debt-free."
+      keywords="loan management, loan tracking, debt management, loan payments, loan calculator, debt payoff, loan balance"
+    />
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -173,7 +177,8 @@
 </template>
 
 <script setup>
-import { Head, Link, router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
+import SeoHead from '@/Components/SeoHead.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { computed } from 'vue'
 

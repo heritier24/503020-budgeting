@@ -4,7 +4,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
+import SeoHead from '@/Components/SeoHead.vue';
 
 const form = useForm({
     name: '',
@@ -22,7 +23,11 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Register" />
+        <SeoHead
+          title="Register"
+          description="Create your free Tamba Group Budget Tracker account. Start managing your finances with the 50/30/20 budgeting rule. Track expenses, set goals, and take control of your money."
+          keywords="register, sign up, create account, budget tracker signup, free budget app, financial planning signup"
+        />
 
         <!-- Registration Form -->
         <div class="card max-w-md mx-auto">

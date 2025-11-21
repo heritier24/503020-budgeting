@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import OnboardingWizard from '@/Components/Onboarding/OnboardingWizard.vue'
-import { Head } from '@inertiajs/vue3'
+import SeoHead from '@/Components/SeoHead.vue'
 import { ref } from 'vue'
 
 // Props
@@ -20,7 +20,12 @@ const handleOnboardingComplete = () => {
 </script>
 
 <template>
-    <Head title="Onboarding" />
+    <SeoHead
+      title="Onboarding"
+      description="Complete your budget setup in just a few steps. Configure your 50/30/20 allocation, add income sources, and start tracking your finances."
+      keywords="onboarding, budget setup, initial setup, configure budget, budget configuration"
+      noindex="true"
+    />
 
     <AuthenticatedLayout :user="user">
         <template #header>

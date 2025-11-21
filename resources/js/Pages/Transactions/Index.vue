@@ -1,6 +1,10 @@
 <template>
   <AuthenticatedLayout :user="user">
-    <Head title="Transactions" />
+    <SeoHead
+      title="Transactions"
+      description="View and manage all your financial transactions. Track income and expenses, filter by date, category, and type. Keep a complete record of your financial activity."
+      keywords="transactions, expense tracking, income records, financial transactions, transaction history, money management, expense log"
+    />
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -184,7 +188,8 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head, Link, router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
+import SeoHead from '@/Components/SeoHead.vue'
 import { ref, computed, watch } from 'vue'
 
 // Props

@@ -5,7 +5,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
+import SeoHead from '@/Components/SeoHead.vue';
 
 defineProps({
     canResetPassword: {
@@ -31,7 +32,12 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Log in" />
+        <SeoHead
+          title="Log in"
+          description="Sign in to your Tamba Group Budget Tracker account to access your financial dashboard, track expenses, and manage your budget."
+          keywords="login, sign in, budget tracker login, financial dashboard login"
+          noindex="true"
+        />
 
         <!-- Status Message -->
         <div v-if="status" class="mb-6 p-4 bg-accent-success/10 border border-accent-success/20 rounded-lg">

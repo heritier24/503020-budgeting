@@ -1,6 +1,10 @@
 <template>
   <AuthenticatedLayout :user="data.user">
-    <Head title="Analytics" />
+    <SeoHead
+      title="Analytics"
+      description="Analyze your spending patterns, view detailed financial reports, track budget performance, and gain insights into your financial habits with interactive charts and visualizations."
+      keywords="financial analytics, spending analysis, budget reports, expense reports, financial insights, spending trends, budget performance, financial charts, data visualization"
+    />
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -291,7 +295,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import BudgetPieChart from '@/Components/Charts/BudgetPieChart.vue'
 import SpendingTrendsChart from '@/Components/Charts/SpendingTrendsChart.vue'
 import ExportModal from '@/Components/Export/ExportModal.vue'
-import { Head, router } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
+import SeoHead from '@/Components/SeoHead.vue'
 
 // Props
 defineProps<{

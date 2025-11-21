@@ -1,6 +1,10 @@
 <template>
   <AuthenticatedLayout :user="data.user">
-    <Head title="Financial Goals" />
+    <SeoHead
+      title="Financial Goals"
+      description="Set and track your financial goals. Monitor savings goals, debt payoff targets, and expense reduction objectives. Visualize your progress and stay motivated."
+      keywords="financial goals, savings goals, debt payoff, financial planning, goal tracking, savings targets, financial objectives, money goals"
+    />
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -187,7 +191,8 @@
 </template>
 
 <script setup>
-import { Head, Link, router } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
+import SeoHead from '@/Components/SeoHead.vue'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 
 // Props

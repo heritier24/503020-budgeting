@@ -1,6 +1,10 @@
 <template>
   <AuthenticatedLayout :user="data.user">
-    <Head title="Dashboard" />
+    <SeoHead
+      title="Dashboard"
+      description="View your financial overview, track your 50/30/20 budget allocation, monitor expenses, and see your progress towards financial goals."
+      keywords="dashboard, budget overview, financial dashboard, expense tracking, budget allocation, financial goals, spending analysis"
+    />
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -23,7 +27,7 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import DashboardOverview from '@/Components/Dashboard/DashboardOverview.vue'
-import { Head } from '@inertiajs/vue3'
+import SeoHead from '@/Components/SeoHead.vue'
 
 // Props
 defineProps<{

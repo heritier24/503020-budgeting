@@ -3,6 +3,9 @@ import { Head, Link } from '@inertiajs/vue3'
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { ref } from 'vue'
 
+// Declare global route function
+declare const route: any
+
 // Props
 const props = defineProps<{
   users: {

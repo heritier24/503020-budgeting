@@ -2,6 +2,9 @@
 import { Head, Link } from '@inertiajs/vue3'
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 
+// Declare global route function
+declare const route: any
+
 // Props
 defineProps<{
   user: {
